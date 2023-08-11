@@ -2,14 +2,11 @@ import Home from 'pages/Home';
 import '../scss/app.scss';
 import Header from './Header/Header';
 import NotFound from 'pages/NotFound';
-import NotFoundBlock from './NotFound/NotFoundBlock';
+// import NotFoundBlock from './NotFound/NotFoundBlock';
 import {
-  BrowserRouter as Router,
-  Switch,
+  // BrowserRouter as Router,
   Routes,
   Route,
-  Link,
-  BrowserRouter
 } from "react-router-dom";
 import Cart from 'pages/Cart';
 

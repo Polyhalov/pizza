@@ -15,10 +15,12 @@ const Home = () => {
         setItems(arr);
         setIsLoading(false);
       });
+      window.scrollTo(0, 0);
   },[])
     return (
         <>
-            <div className="content__top">
+            <div className="container">
+                <div className="content__top">
             <Categories></Categories>
             <Sort></Sort>
           </div>
@@ -27,6 +29,7 @@ const Home = () => {
             {isLoading ? [...new Array(10)].map((_, index) => <Skeleton key={index} />)
               : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
           </div>
+            </div>
         </>
     )
 }

@@ -6,6 +6,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
     const [activeType, setActiveType] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
     return (
+      <div className='pizza-block-wrapper'>
         <div className="pizza-block">
         <img
     className="pizza-block__image"
@@ -41,6 +42,7 @@ const PizzaBlock = ({ title, price, imageUrl, sizes, types }) => {
     </button>
   </div>
             </div>
+        </div>
     )
 }
 export default PizzaBlock;

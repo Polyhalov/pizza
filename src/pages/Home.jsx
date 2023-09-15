@@ -6,23 +6,31 @@ import { useEffect, useState } from "react";
 
 const Home = () => {
 
-    const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [categoryID, setCategoryId] = useState(0);
+  const [sortType, setSortType] = useState({
+    name: 'популярності',
+    sort: 'rating'
+  });
+
+
 
   useEffect(() => {
-    fetch('https://64d5f14a754d3e0f13615c96.mockapi.io/items').then((res) => res.json())
+    setIsLoading(true)
+    fetch(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryID>0?`category=${categoryID}`:''}&sortby=${sortType.sort}&${sortType.sort==='title'? `order=asc`:`order=desc`}`).then((res) => res.json())
       .then((arr) => {
         setItems(arr);
         setIsLoading(false);
       });
       window.scrollTo(0, 0);
-  },[])
+  }, [categoryID, sortType])
     return (
         <>
             <div className="container">
                 <div className="content__top">
-            <Categories></Categories>
-            <Sort></Sort>
+            <Categories value={categoryID} onClickCategory={(i)=>setCategoryId(i)}></Categories>
+            <Sort value={sortType} onChangeSort={(i)=>setSortType(i)}></Sort>
           </div>
           <h2 className="content__title">Всі піцци</h2>
           <div className="content__items">

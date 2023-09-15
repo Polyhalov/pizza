@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 const Categories = ({value, onClickCategory}) => {
     const categories = ["Всі","М'ясні","Вегитаріанські","Гриль","Гострі","Закриті"]

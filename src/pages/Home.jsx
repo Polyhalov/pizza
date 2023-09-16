@@ -15,7 +15,7 @@ const Home = ({searchValue}) => {
   });
 
 
-  const search = searchValue ? `&search=${searchValue}` : '';
+  const search = (searchValue ? `&search=${searchValue}` : '');
   useEffect(() => {
     setIsLoading(true)
     fetch(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryID>0?`category=${categoryID}`:''}&sortby=${sortType.sort}&${sortType.sort==='title'? `order=asc`:`order=desc`}${search}`).then((res) => res.json())
@@ -24,7 +24,7 @@ const Home = ({searchValue}) => {
         setIsLoading(false);
       });
       window.scrollTo(0, 0);
-  }, [categoryID, sortType, searchValue])
+  }, [categoryID, sortType, search])
     return (
         <>
             <div className="container">

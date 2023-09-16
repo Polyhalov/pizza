@@ -1,7 +1,7 @@
 import styles from './Search.module.scss'
- const Search = () => {
+ const Search = ({searchValue, setSearchValue}) => {
     return (
-        <input className={styles.root} placeholder="Пошук піцци..."></input>
+        <input onChange={(e)=>setSearchValue(e.target.value)} value={searchValue} className={styles.root} placeholder="Пошук піцци..."></input>
     )
 }
 

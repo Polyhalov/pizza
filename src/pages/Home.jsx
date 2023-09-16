@@ -4,7 +4,7 @@ import Skeleton from "components/PizzaBlock/Skeleton";
 import Sort from "components/Sort/Sort";
 import { useEffect, useState } from "react";
 
-const Home = () => {
+const Home = ({searchValue}) => {
 
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -15,16 +15,16 @@ const Home = () => {
   });
 
 
-
+  const search = searchValue ? `&search=${searchValue}` : '';
   useEffect(() => {
     setIsLoading(true)
-    fetch(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryID>0?`category=${categoryID}`:''}&sortby=${sortType.sort}&${sortType.sort==='title'? `order=asc`:`order=desc`}`).then((res) => res.json())
+    fetch(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryID>0?`category=${categoryID}`:''}&sortby=${sortType.sort}&${sortType.sort==='title'? `order=asc`:`order=desc`}${search}`).then((res) => res.json())
       .then((arr) => {
         setItems(arr);
         setIsLoading(false);
       });
       window.scrollTo(0, 0);
-  }, [categoryID, sortType])
+  }, [categoryID, sortType, searchValue])
     return (
         <>
             <div className="container">
@@ -42,3 +42,4 @@ const Home = () => {
     )
 }
 export default Home;
+//.filter(obj=>{if(obj.title.toLowerCase().includes(searchValue.toLowerCase())){return true}return false})

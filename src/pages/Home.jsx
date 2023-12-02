@@ -1,3 +1,4 @@
+import axios from "axios";
 import Categories from "components/Categories/Categories";
 import PizzaBlock from "components/PizzaBlock/PizzaBlock";
 import Skeleton from "components/PizzaBlock/Skeleton";
@@ -23,12 +24,12 @@ const Home = ({ searchValue }) => {
 
   const search = (searchValue ? `&search=${searchValue}` : '');
   useEffect(() => {
-    setIsLoading(true)
-    fetch(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryId>0?`category=${categoryId}`:''}&sortby=${sortType}&${sortType==='title'? `order=asc`:`order=desc`}${search}`).then((res) => res.json())
-      .then((arr) => {
-        setItems(arr);
+    setIsLoading(true) 
+    axios.get(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortby=${sortType}&${sortType === 'title' ? `order=asc` : `order=desc`}${search}`)
+      .then((res) => {
+        setItems(res.data);
         setIsLoading(false);
-      });
+    })
       window.scrollTo(0, 0);
   }, [categoryId, sortType, search])
     return (

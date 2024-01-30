@@ -37,6 +37,7 @@ const Home = ({ searchValue }) => {
         })
       )
     }
+    // eslint-disable-next-line
   },[])
   useEffect(() => {
     setIsLoading(true) 

@@ -2,10 +2,12 @@ import axios from "axios";
 import Categories from "components/Categories/Categories";
 import PizzaBlock from "components/PizzaBlock/PizzaBlock";
 import Skeleton from "components/PizzaBlock/Skeleton";
-import Sort from "components/Sort/Sort";
+import Sort, { list } from "components/Sort/Sort";
+import qs from 'qs';
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId } from "redux/slices/filterSlice";
+import { setCategoryId, setFilters } from "redux/slices/filterSlice";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = ({ searchValue }) => {
@@ -13,6 +15,7 @@ const Home = ({ searchValue }) => {
   const categoryId = useSelector(state => state.filterSlice.categoryId)
   const sortType = useSelector(state => state.filterSlice.sort.sortProp);
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
 
   const [items, setItems] = useState([]);
@@ -24,6 +27,18 @@ const Home = ({ searchValue }) => {
 
   const search = (searchValue ? `&search=${searchValue}` : '');
   useEffect(() => {
+    if(window.location.search){
+      const params = qs.parse(window.location.search.substring(1))
+      const sort = list.find(obj=>obj.sortProp===params.sortType)
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        })
+      )
+    }
+  },[])
+  useEffect(() => {
     setIsLoading(true) 
     axios.get(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortby=${sortType}&${sortType === 'title' ? `order=asc` : `order=desc`}${search}`)
       .then((res) => {
@@ -32,6 +47,13 @@ const Home = ({ searchValue }) => {
     })
       window.scrollTo(0, 0);
   }, [categoryId, sortType, search])
+  useEffect(() => {
+    const queryString = qs.stringify({
+      sortType,
+      categoryId
+    })
+    navigate(`?${queryString}`)
+  }, [categoryId, sortType, navigate]);
     return (
         <>
             <div className="container">

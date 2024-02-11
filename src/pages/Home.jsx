@@ -26,13 +26,21 @@ const Home = ({ searchValue }) => {
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
   }
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true) 
-    axios.get(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortby=${sortType}&${sortType === 'title' ? `order=asc` : `order=desc`}${search}`)
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-    })
+    // await axios.get(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortby=${sortType}&${sortType === 'title' ? `order=asc` : `order=desc`}${search}`)
+    //   .then((res) => {
+    //     setItems(res.data);
+    //     setIsLoading(false);
+    //   })
+    try {
+      const res = await axios.get(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortby=${sortType}&${sortType === 'title' ? `order=asc` : `order=desc`}${search}`);
+    setItems(res.data);
+    } catch (error) {
+      alert('Помилка при отриманні піцци')
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const search = (searchValue ? `&search=${searchValue}` : '');

@@ -1,46 +1,40 @@
-import axios from "axios";
+// import axios from "axios";
 import Categories from "components/Categories/Categories";
 import PizzaBlock from "components/PizzaBlock/PizzaBlock";
 import Skeleton from "components/PizzaBlock/Skeleton";
 import Sort, { list } from "components/Sort/Sort";
 import qs from 'qs';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId, setFilters } from "redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
+import {  fetchPizzas } from "redux/slices/pizzasSlice";
 
 
 const Home = ({ searchValue }) => {
   
   const categoryId = useSelector(state => state.filterSlice.categoryId)
   const sortType = useSelector(state => state.filterSlice.sort.sortProp);
+  const {items, status} = useSelector((state) => state.pizzasSlice);
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
 
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
   }
-  const fetchPizzas = async () => {
-    setIsLoading(true) 
-    // await axios.get(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortby=${sortType}&${sortType === 'title' ? `order=asc` : `order=desc`}${search}`)
-    //   .then((res) => {
-    //     setItems(res.data);
-    //     setIsLoading(false);
-    //   })
-    try {
-      const res = await axios.get(`https://64d5f14a754d3e0f13615c96.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortby=${sortType}&${sortType === 'title' ? `order=asc` : `order=desc`}${search}`);
-    setItems(res.data);
-    } catch (error) {
-      alert('Помилка при отриманні піцци')
-    } finally {
-      setIsLoading(false);
-    }
+  const getPizzas = async () => {
+    // setIsLoading(true) 
+  
+    dispatch(fetchPizzas({
+        categoryId,
+        sortType,
+        search,
+      }));
   }
 
   const search = (searchValue ? `&search=${searchValue}` : '');
@@ -57,11 +51,12 @@ const Home = ({ searchValue }) => {
       isSearch.current = true;
     }
     // eslint-disable-next-line
-  },[])
+  }, [])
+  
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
     // eslint-disable-next-line
@@ -70,8 +65,9 @@ const Home = ({ searchValue }) => {
     if (isMounted.current) {
       const queryString = qs.stringify({
       sortType,
-      categoryId
-    })
+        categoryId: categoryId > 0 ? categoryId : null
+      },{skipNulls:true})
+      console.log(queryString)
     navigate(`?${queryString}`)
     }
     isMounted.current = true;
@@ -84,10 +80,13 @@ const Home = ({ searchValue }) => {
             <Sort></Sort>
           </div>
           <h2 className="content__title">Всі піцци</h2>
-          <div className="content__items">
-            {isLoading ? [...new Array(items.length)].map((_, index) => <Skeleton key={index} />)
+          {status === 'error' ? <div>
+            <h2>Піцци не завантажились!</h2>
+            <p>Будь-ласка спробуйте ще раз!</p>
+         </div>:<div className="content__items">
+            {status==='loading' ? [...new Array(items.length)].map((_, index) => <Skeleton key={index} />)
               : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
-          </div>
+          </div>}
             </div>
         </>
     )

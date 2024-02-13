@@ -8,14 +8,15 @@ import { useEffect, useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId, setFilters } from "redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import {  fetchPizzas } from "redux/slices/pizzasSlice";
+import {  fetchPizzas, selectPizza } from "redux/slices/pizzasSlice";
 
 
-const Home = ({ searchValue }) => {
+const Home = () => {
   
   const categoryId = useSelector(state => state.filterSlice.categoryId)
   const sortType = useSelector(state => state.filterSlice.sort.sortProp);
-  const {items, status} = useSelector((state) => state.pizzasSlice);
+  const searchValue = useSelector(state => state.filterSlice.searchValue);
+  const {items, status} = useSelector(selectPizza);
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const isSearch = useRef(false);
@@ -67,7 +68,6 @@ const Home = ({ searchValue }) => {
       sortType,
         categoryId: categoryId > 0 ? categoryId : null
       },{skipNulls:true})
-      console.log(queryString)
     navigate(`?${queryString}`)
     }
     isMounted.current = true;

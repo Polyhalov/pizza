@@ -2,13 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "jsx": "react-jsx",
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "removeComments": true,
-    "preserveConstEnums": true,
-    "esModuleInterop": true,
-    "allowImportingTsExtensions": true,
-    "sourceMap": true
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }

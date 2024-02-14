@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
-import { App } from 'components/App';
+import { App } from 'components/App.tsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

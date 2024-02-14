@@ -6,13 +6,12 @@ import Sort, { list } from "components/Sort/Sort";
 import qs from 'qs';
 import { useEffect, useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId, setFilters } from "redux/slices/filterSlice";
+import { setCategoryId, setFilters } from "../redux/slices/filterSlice";
 import { useNavigate } from "react-router-dom";
-import {  fetchPizzas, selectPizza } from "redux/slices/pizzasSlice";
+import { fetchPizzas, selectPizza } from "../redux/slices/pizzasSlice";
 
 
 const Home = () => {
-  
   const categoryId = useSelector(state => state.filterSlice.categoryId)
   const sortType = useSelector(state => state.filterSlice.sort.sortProp);
   const searchValue = useSelector(state => state.filterSlice.searchValue);

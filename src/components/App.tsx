@@ -1,13 +1,12 @@
-import Home from 'pages/Home';
+import Home from '../pages/Home';
 import '../scss/app.scss';
-import Header from './Header/Header';
-import NotFound from 'pages/NotFound';
+import Header from './Header/Header.tsx';
+import NotFound from '../pages/NotFound';
 import {
-  // BrowserRouter as Router,
   Routes,
   Route,
 } from "react-router-dom";
-import Cart from 'pages/Cart';
+import Cart from '../pages/Cart';
 
 
 

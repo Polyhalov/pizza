@@ -1,20 +1,21 @@
-// import axios from "axios";
-import Categories from "components/Categories/Categories";
-import PizzaBlock from "components/PizzaBlock/PizzaBlock";
-import Skeleton from "components/PizzaBlock/Skeleton";
-import Sort, { list } from "components/Sort/Sort";
+import Categories from "../components/Categories/Categories.tsx";
+import PizzaBlock from "../components/PizzaBlock/PizzaBlock.tsx";
+import Skeleton from "../components/PizzaBlock/Skeleton.tsx";
+import Sort, { list } from "../components/Sort/Sort.tsx";
 import qs from 'qs';
 import { useEffect, useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategoryId, setFilters } from "../redux/slices/filterSlice";
+import { selectCategoryId, selectSearchValue, selectSortProp, setCategoryId, setFilters } from "../redux/slices/filterSlice.js";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas, selectPizza } from "../redux/slices/pizzasSlice";
+import { fetchPizzas, selectPizza } from "../redux/slices/pizzasSlice.js";
 
 
-const Home = () => {
-  const categoryId = useSelector(state => state.filterSlice.categoryId)
-  const sortType = useSelector(state => state.filterSlice.sort.sortProp);
-  const searchValue = useSelector(state => state.filterSlice.searchValue);
+const Home: React.FC = () => {
+  const categoryId = useSelector(selectCategoryId)
+
+  const sortType = useSelector(selectSortProp);
+
+  const searchValue = useSelector(selectSearchValue);
   const {items, status} = useSelector(selectPizza);
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -24,13 +25,15 @@ const Home = () => {
 
   // const [isLoading, setIsLoading] = useState(true);
 
-  const onClickCategory = (id) => {
+  const onClickCategory = (id:number) => {
     dispatch(setCategoryId(id));
   }
   const getPizzas = async () => {
     // setIsLoading(true) 
   
-    dispatch(fetchPizzas({
+    dispatch(
+      //@ts-ignore
+      fetchPizzas({
         categoryId,
         sortType,
         search,
@@ -84,7 +87,7 @@ const Home = () => {
             <p>Будь-ласка спробуйте ще раз!</p>
          </div>:<div className="content__items">
             {status==='loading' ? [...new Array(items.length)].map((_, index) => <Skeleton key={index} />)
-              : items.map((item) => <PizzaBlock key={item.id} {...item} />)}
+              : items.map((item:any) => <PizzaBlock key={item.id} {...item} />)}
           </div>}
             </div>
         </>

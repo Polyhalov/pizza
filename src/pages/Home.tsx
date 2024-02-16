@@ -4,10 +4,11 @@ import Skeleton from "../components/PizzaBlock/Skeleton.tsx";
 import Sort, { list } from "../components/Sort/Sort.tsx";
 import qs from 'qs';
 import { useEffect, useRef} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCategoryId, selectSearchValue, selectSortProp, setCategoryId, setFilters } from "../redux/slices/filterSlice.js";
+import {  useSelector } from "react-redux";
+import { selectCategoryId, selectSearchValue, selectSortProp, setCategoryId, setFilters } from "../redux/slices/filterSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas, selectPizza } from "../redux/slices/pizzasSlice.js";
+import { fetchPizzas, selectPizza } from "../redux/slices/pizzasSlice.ts";
+import { useAppDispatch } from "../redux/store.ts";
 
 
 const Home: React.FC = () => {
@@ -17,7 +18,7 @@ const Home: React.FC = () => {
 
   const searchValue = useSelector(selectSearchValue);
   const {items, status} = useSelector(selectPizza);
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
@@ -32,7 +33,6 @@ const Home: React.FC = () => {
     // setIsLoading(true) 
   
     dispatch(
-      //@ts-ignore
       fetchPizzas({
         categoryId,
         sortType,
@@ -44,13 +44,21 @@ const Home: React.FC = () => {
   useEffect(() => {
     if(window.location.search){
       const params = qs.parse(window.location.search.substring(1))
-      const sort = list.find(obj=>obj.sortProp===params.sortType)
-      dispatch(
+      const sort = list.find(obj => obj.sortProp === params.sortType)
+        dispatch(
         setFilters({
           ...params,
-          sort,
+          sort
         })
       )
+      console.log(params)
+      
+      
+        
+     
+      
+      
+      
       isSearch.current = true;
     }
     // eslint-disable-next-line

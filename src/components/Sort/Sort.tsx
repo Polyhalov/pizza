@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSort, setSort } from "../../redux/slices/filterSlice";
 
@@ -6,6 +6,8 @@ type SortListItem = {
   name: string;
   sortProp: string;
 }
+
+
 
  export const list:SortListItem[] = [{ name: 'популярності', sortProp: 'rating' },
                       { name: 'ціні', sortProp: 'price' },
@@ -23,8 +25,11 @@ const Sort = () => {
         setIsVisible(false);
   }
   useEffect(() => {
-    const handleClickOutside = (event:any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as MouseEvent & {
+        composedPath: Node[];
+      }
+      if (sortRef.current&&!_event.composedPath().includes(sortRef.current)) {
         setIsVisible(false);
       }
     

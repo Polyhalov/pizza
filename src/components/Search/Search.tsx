@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styles from './Search.module.scss'
 import debounce from 'lodash.debounce';
 import { useDispatch } from 'react-redux';
@@ -8,13 +8,13 @@ const Search:React.FC = () => {
     const [value, setValue] = useState('');
 
     
-    const onChangeInput = (event:any) => {
+    const onChangeInput = (event:React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value)
         updateSearchValue(event.target.value)
     }
     // eslint-disable-next-line
     const updateSearchValue = useCallback(
-        debounce((str:any) => {
+        debounce((str:string) => {
             dispatch(setSearchValue(str))
         }, 1000), [],
     );

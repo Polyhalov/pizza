@@ -17,7 +17,7 @@ const CartItem:React.FC<CartItemProps> = ({ id, title, type, price, size, count,
         dispatch(plusItem(id)) 
     }
   const onClickMinus = () => {
-    if (count > 0) { dispatch(minusItem(id)) };
+    if (count > 1) { dispatch(minusItem(id)) };
          
     }
     const onClickRemove = () => {

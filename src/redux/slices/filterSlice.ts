@@ -1,16 +1,17 @@
 
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { SortListItem } from "../../components/Sort/Sort";
 
 type Sort = {
   name: string;
   sortProp: string;
 }
 
-interface FilterSliceState {
+export interface FilterSliceState {
   searchValue: string;
   categoryId: number;
-  sort:Sort;
+  sort: Sort;
 }
 const initialState:FilterSliceState = {
     searchValue:'',

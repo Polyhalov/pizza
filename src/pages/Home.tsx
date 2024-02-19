@@ -5,9 +5,9 @@ import Sort, { list } from "../components/Sort/Sort.tsx";
 import qs from 'qs';
 import { useEffect, useRef} from "react";
 import {  useSelector } from "react-redux";
-import { selectCategoryId, selectSearchValue, selectSortProp, setCategoryId, setFilters } from "../redux/slices/filterSlice.ts";
+import {  FilterSliceState, selectCategoryId, selectSearchValue, selectSortProp, setCategoryId, setFilters } from "../redux/slices/filterSlice.ts";
 import { useNavigate } from "react-router-dom";
-import { fetchPizzas, selectPizza } from "../redux/slices/pizzasSlice.ts";
+import {  fetchPizzas, selectPizza } from "../redux/slices/pizzasSlice.ts";
 import { useAppDispatch } from "../redux/store.ts";
 
 
@@ -40,18 +40,21 @@ const Home: React.FC = () => {
       }));
   }
 
+ 
+
   const search = (searchValue ? `&search=${searchValue}` : '');
   useEffect(() => {
     if(window.location.search){
       const params = qs.parse(window.location.search.substring(1))
-      const sort = list.find(obj => obj.sortProp === params.sortType)
+      const sort = list.find(obj => obj.sortProp === params.sortType);
         dispatch(
         setFilters({
           ...params,
-          sort
-        })
+          sort,
+        } as FilterSliceState)
       )
-      console.log(params)
+      console.log(sort)
+      console.log(list[0])
       
       
         

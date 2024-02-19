@@ -2,9 +2,9 @@ import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { RootState } from '../store';
 
-type FetchPizzasArgs = {
+export type FetchPizzasArgs = {
     categoryId: number;
-    sortType?: string;
+    sortType: string;
     search: string;
 }
 

@@ -24,13 +24,11 @@ const Home: React.FC = () => {
   const isMounted = useRef(false);
 
 
-  // const [isLoading, setIsLoading] = useState(true);
 
   const onClickCategory = (id:number) => {
     dispatch(setCategoryId(id));
   }
   const getPizzas = async () => {
-    // setIsLoading(true) 
   
     dispatch(
       fetchPizzas({
@@ -105,4 +103,3 @@ const Home: React.FC = () => {
     )
 }
 export default Home;
-//.filter(obj=>{if(obj.title.toLowerCase().includes(searchValue.toLowerCase())){return true}return false})

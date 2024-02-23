@@ -1,7 +1,6 @@
 
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { SortListItem } from "../../components/Sort/Sort";
 
 type Sort = {
   name: string;

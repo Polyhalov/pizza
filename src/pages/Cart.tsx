@@ -37,7 +37,7 @@ const Cart:React.FC = () => {
 <path d="M11.6666 9.16667V14.1667" stroke="#B6B6B6" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
-                <span>Очистить корзину</span>
+                <span>Очистити корзину</span>
               </div>
             </div>
             <div className="content__items">
@@ -46,8 +46,8 @@ const Cart:React.FC = () => {
             </div>
             <div className="cart__bottom">
               <div className="cart__bottom-details">
-                <span> Всего пицц: <b>{totalCount} шт.</b> </span>
-                <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
+                <span> Всього піцц: <b>{totalCount} шт.</b> </span>
+                <span> Сума замовлення: <b>{totalPrice} ₴</b> </span>
               </div>
               <div className="cart__bottom-buttons">
                 <Link to="/" className="button button--outline button--add go-back-btn">
@@ -55,10 +55,10 @@ const Cart:React.FC = () => {
 <path d="M7 13L1 6.93015L6.86175 1" stroke="#D3D3D3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 </svg>
 
-                  <span>Вернуться назад</span>
+                  <span>Повернутися назад</span>
                 </Link>
                 <div className="button pay-btn">
-                  <span>Оплатить сейчас</span>
+                  <span>Оплатити зараз</span>
                 </div>
               </div>
             </div>
